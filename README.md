@@ -8,6 +8,13 @@
 
 ## 入口 A：恢复自己的选择
 
+首次获取工程：
+
+```powershell
+git clone https://github.com/GOLD99LT/ai-toolchain-kit.git
+cd ai-toolchain-kit
+```
+
 在仓库根目录打开 PowerShell；需要 Node.js >=22.20.0、npm，Git 来源技能还需要 Git。先阅读输出，处理实际报告的缺失条件。
 
 ```powershell

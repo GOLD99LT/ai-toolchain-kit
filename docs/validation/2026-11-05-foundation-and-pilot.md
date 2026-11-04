@@ -49,7 +49,7 @@ f9e64fb97c4887b13b03e29b0a4d39fcd77deceeb2767174b0a1ccaed5991a00
 - 办公插件：本机查得 documents/pdf/presentations/spreadsheets 的包名与版本均为 26.1030.10813，但新电脑的获得途径和实际业务样例仍需核对。
 - 真实公司模板、真实 BOM、Keil 工程、网站/VPS 部署。
 - 完整隔离恢复和另一台电脑实测。
-- Git 远端平台、仓库名称与公开范围；本地成果可审阅后确定。
+- GitHub 发布目标已由用户明确批准为 `GOLD99LT/ai-toolchain-kit`，公开仓库；发布不会使上述未验证能力自动变为已通过。
 
 ## 可复现命令
 
