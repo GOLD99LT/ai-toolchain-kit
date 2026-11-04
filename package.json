@@ -1,0 +1,12 @@
+{
+  "name": "ai-toolchain-kit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.20.0" },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "check": "node scripts/lib/toolchain.mjs validate --root .",
+    "plan": "node scripts/lib/toolchain.mjs plan --root . --profile profiles/examples/code-context.json"
+  }
+}

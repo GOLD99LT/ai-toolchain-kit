@@ -1,0 +1,38 @@
+{
+  "input": {
+    "maxFileSize": 1048576
+  },
+  "include": [
+    "Core/**",
+    "README.md",
+    "EXPECTED.md",
+    "expected.json",
+    "repomix.config.json"
+  ],
+  "output": {
+    "style": "xml",
+    "filePathStyle": "target-relative",
+    "parsableStyle": false,
+    "removeComments": false,
+    "removeEmptyLines": false,
+    "compress": false,
+    "showLineNumbers": false,
+    "git": {
+      "sortByChanges": false,
+      "includeDiffs": false,
+      "includeLogs": false
+    }
+  },
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": [
+      "**/.local/**",
+      "**/repomix-output*",
+      "**/build/**",
+      "**/*.o",
+      "**/*.obj",
+      "**/*.exe"
+    ]
+  }
+}

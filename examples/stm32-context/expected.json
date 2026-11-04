@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "files": [
+    "Core/Inc/app_config.h",
+    "Core/Inc/app_led.h",
+    "Core/Inc/app_uart.h",
+    "Core/Inc/mock_hal.h",
+    "Core/Inc/stm32xx_it.h",
+    "Core/Src/app_led.c",
+    "Core/Src/app_uart.c",
+    "Core/Src/main.c",
+    "Core/Src/mock_hal.c",
+    "Core/Src/stm32xx_it.c",
+    "README.md",
+    "EXPECTED.md",
+    "expected.json",
+    "repomix.config.json"
+  ],
+  "facts": [
+    {
+      "id": "synthetic-not-flashable",
+      "file": "Core/Src/main.c",
+      "needle": "/* 合成分析样例：不可直接烧录，不包含真实 STM32 启动代码。 */"
+    },
+    {
+      "id": "c-entry",
+      "file": "Core/Src/main.c",
+      "needle": "int main(void)"
+    },
+    {
+      "id": "initialization-order",
+      "file": "Core/Src/main.c",
+      "needle": "    HAL_Init();\n#if APP_LED_ENABLED\n    AppLed_Init();\n#endif\n#if APP_UART_ENABLED\n    MX_USART2_UART_Init();\n    AppUart_Init();"
+    },
+    {
+      "id": "synthetic-irq-trigger",
+      "file": "Core/Src/main.c",
+      "needle": "    USART2_IRQHandler();"
+    },
+    {
+      "id": "uart-enabled-default",
+      "file": "Core/Inc/app_config.h",
+      "needle": "#ifndef APP_UART_ENABLED\n#define APP_UART_ENABLED 1\n#endif"
+    },
+    {
+      "id": "led-enabled-default",
+      "file": "Core/Inc/app_config.h",
+      "needle": "#ifndef APP_LED_ENABLED\n#define APP_LED_ENABLED 1\n#endif"
+    },
+    {
+      "id": "uart-baudrate",
+      "file": "Core/Inc/app_config.h",
+      "needle": "#define APP_UART_BAUDRATE 115200U"
+    },
+    {
+      "id": "toggle-command",
+      "file": "Core/Inc/app_config.h",
+      "needle": "#define APP_LED_TOGGLE_BYTE 'T'"
+    },
+    {
+      "id": "mock-input-byte",
+      "file": "Core/Inc/app_config.h",
+      "needle": "#define APP_MOCK_RX_BYTE 'T'"
+    },
+    {
+      "id": "uart-handle-definition",
+      "file": "Core/Src/main.c",
+      "needle": "UART_HandleTypeDef huart2;"
+    },
+    {
+      "id": "uart-handle-declaration",
+      "file": "Core/Inc/app_uart.h",
+      "needle": "extern UART_HandleTypeDef huart2;"
+    },
+    {
+      "id": "uart-configuration-applied",
+      "file": "Core/Src/main.c",
+      "needle": "    huart2.Instance = MOCK_USART2_ID;\n    huart2.BaudRate = APP_UART_BAUDRATE;\n    HAL_UART_Init(&huart2);"
+    },
+    {
+      "id": "irq-to-hal",
+      "file": "Core/Src/stm32xx_it.c",
+      "needle": "#if APP_UART_ENABLED\n    HAL_UART_IRQHandler(&huart2);\n#endif"
+    },
+    {
+      "id": "first-receive-armed",
+      "file": "Core/Src/app_uart.c",
+      "needle": "void AppUart_Init(void)\n{\n    reset_state();\n    (void)HAL_UART_Receive_IT(&huart2, &rx_byte, 1U);\n}"
+    },
+    {
+      "id": "handler-needs-armed-buffer",
+      "file": "Core/Src/mock_hal.c",
+      "needle": "    if (huart == NULL || huart->rx_target == NULL) {\n        return;\n    }"
+    },
+    {
+      "id": "hal-fills-buffer-and-dispatches",
+      "file": "Core/Src/mock_hal.c",
+      "needle": "    *huart->rx_target = (uint8_t)APP_MOCK_RX_BYTE;\n    huart->rx_target = NULL;\n    HAL_UART_RxCpltCallback(huart);"
+    },
+    {
+      "id": "weak-attribute",
+      "file": "Core/Src/mock_hal.c",
+      "needle": "#define MOCK_WEAK __attribute__((weak))"
+    },
+    {
+      "id": "weak-default-callback",
+      "file": "Core/Src/mock_hal.c",
+      "needle": "MOCK_WEAK void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)\n{\n    (void)huart;\n}"
+    },
+    {
+      "id": "strong-application-callback",
+      "file": "Core/Src/app_uart.c",
+      "needle": "void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)\n{"
+    },
+    {
+      "id": "callback-handle-filter",
+      "file": "Core/Src/app_uart.c",
+      "needle": "    if (huart != &huart2) {\n        return;\n    }"
+    },
+    {
+      "id": "callback-dispatch-and-rearm",
+      "file": "Core/Src/app_uart.c",
+      "needle": "    AppUart_OnByte(rx_byte);\n    (void)HAL_UART_Receive_IT(&huart2, &rx_byte, 1U);"
+    },
+    {
+      "id": "uart-count-and-command",
+      "file": "Core/Src/app_uart.c",
+      "needle": "    ++rx_count;\n#if APP_LED_ENABLED\n    if (byte == (uint8_t)APP_LED_TOGGLE_BYTE) {\n        AppLed_Toggle();\n    }"
+    },
+    {
+      "id": "uart-private-reset",
+      "file": "Core/Src/app_uart.c",
+      "needle": "static void reset_state(void)\n{\n    rx_byte = 0U;\n    rx_count = 0U;\n}"
+    },
+    {
+      "id": "led-private-reset",
+      "file": "Core/Src/app_led.c",
+      "needle": "static void reset_state(void)\n{\n    led_on = 0U;\n    HAL_GPIO_WritePin(APP_LED_PIN, led_on);\n}"
+    },
+    {
+      "id": "led-init-resolves-local-reset",
+      "file": "Core/Src/app_led.c",
+      "needle": "void AppLed_Init(void)\n{\n    reset_state();\n}"
+    },
+    {
+      "id": "led-toggle-implementation",
+      "file": "Core/Src/app_led.c",
+      "needle": "    led_on ^= 1U;\n    HAL_GPIO_WritePin(APP_LED_PIN, led_on);"
+    },
+    {
+      "id": "mock-gpio-state",
+      "file": "Core/Src/mock_hal.c",
+      "needle": "    if (pin == APP_LED_PIN) {\n        mock_led_level = level;\n    }"
+    },
+    {
+      "id": "utf8-and-static-scope-comment",
+      "file": "Core/Src/app_uart.c",
+      "needle": "/* UART 的私有复位函数，与 app_led.c 的同名函数互不相干。 */"
+    }
+  ]
+}

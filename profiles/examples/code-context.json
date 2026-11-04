@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "profile_id": "code-context",
+  "capabilities": [
+    {
+      "capability_id": "skill-management",
+      "implementation_id": "skills-cli",
+      "source_id": "skills-cli-1.7.6",
+      "required_targets": [
+        "codex",
+        "dsh"
+      ],
+      "required": true,
+      "verification_id": "skill-management-smoke-v1"
+    },
+    {
+      "capability_id": "code-context",
+      "implementation_id": "repomix",
+      "source_id": "repomix-1.18.1",
+      "required_targets": [
+        "codex",
+        "dsh"
+      ],
+      "required": true,
+      "verification_id": "code-context-pilot-v1"
+    }
+  ]
+}

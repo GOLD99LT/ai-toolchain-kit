@@ -1,0 +1,397 @@
+{
+  "schema_version": 1,
+  "capabilities": [
+    {
+      "capability_id": "skill-management",
+      "title": "普通独立技能管理",
+      "description": "固定 Skills CLI，用单一负责人安装和维护独立技能；技能内容另行固定完整提交与校验。",
+      "implementations": [
+        {
+          "implementation_id": "skills-cli",
+          "source_id": "skills-cli-1.7.6",
+          "targets": [
+            "codex",
+            "dsh"
+          ],
+          "recipe": "recipes/skills-cli.md",
+          "limitations": [
+            "1.7.6 没有 --agent dsh；Codex 目标使用共享 .agents/skills。",
+            "DSH 发现依赖 filesystem 插件、来源设置与同名覆盖；未完成双端任务验证。",
+            "安装 CLI 不等于安装任何技能，CLI 锁定不等于技能包锁定。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-tooling-comparison-v2.md",
+          "summary": "固定 Skills CLI，用单一负责人安装和维护独立技能；技能内容另行固定完整提交与校验。"
+        }
+      ]
+    },
+    {
+      "capability_id": "provider-mcp-management",
+      "title": "供应商与 MCP 配置管理",
+      "description": "以 CC Switch 原生界面管理配置，客户端登录和连接结果分别验证。",
+      "implementations": [
+        {
+          "implementation_id": "cc-switch",
+          "source_id": "cc-switch-4.0.25",
+          "targets": [
+            "codex",
+            "dsh"
+          ],
+          "recipe": "recipes/cc-switch.md",
+          "limitations": [
+            "v4.0.25 发布源码有 DSH 接入，本目录不代表本机升级或连接通过。",
+            "只使用原生安装器/UI；不执行内部 Tauri 接口、不写数据库。",
+            "不再同步由 Skills CLI 或专属安装器负责的同名技能。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-agent-compatibility.md",
+          "summary": "以 CC Switch 原生界面管理配置，客户端登录和连接结果分别验证。"
+        }
+      ]
+    },
+    {
+      "capability_id": "requirements-interview",
+      "title": "需求访谈与方案澄清",
+      "description": "保留用户修改过的本地 grilling，恢复前提供私有来源并采集完整包清单。",
+      "implementations": [
+        {
+          "implementation_id": "local-grilling",
+          "source_id": "private-grilling",
+          "targets": [
+            "codex",
+            "dsh"
+          ],
+          "recipe": "recipes/local-grilling.md",
+          "limitations": [
+            "私有来源尚未采集，不能从公开示例恢复本地修改。",
+            "grill-me 等包装入口及其依赖需分别盘点，不假定上游同名文件相同。",
+            "两个客户端的宿主工具与调用路径仍需实测。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/design/2026-11-04-ai-toolchain-design-v3.md",
+          "summary": "保留用户修改过的本地 grilling，恢复前提供私有来源并采集完整包清单。"
+        }
+      ]
+    },
+    {
+      "capability_id": "office-production",
+      "title": "报告、PDF、PPT 与 BOM",
+      "description": "优先使用宿主提供的 documents/pdf/presentations/spreadsheets，按真实成果验收。",
+      "implementations": [
+        {
+          "implementation_id": "host-office",
+          "source_id": "host-office",
+          "targets": [
+            "codex"
+          ],
+          "recipe": "recipes/host-office.md",
+          "limitations": [
+            "已发现能力入口，完整恢复来源和插件 ID 待核实，不能伪造固定插件包。",
+            "不承诺 DSH 原生可用；有双端要求时应保留缺口并另选实现。",
+            "中文字体、公司模板、可编辑性、BOM 数量和单位尚待样例验证。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-tooling-comparison-v2.md",
+          "summary": "优先使用宿主提供的 documents/pdf/presentations/spreadsheets，按真实成果验收。"
+        }
+      ]
+    },
+    {
+      "capability_id": "code-context",
+      "title": "为模型准备可控代码材料",
+      "description": "用 Repomix 打包明确选择的源码、配置与说明，保留文件路径和可追溯依据。",
+      "implementations": [
+        {
+          "implementation_id": "repomix",
+          "source_id": "repomix-1.18.1",
+          "targets": [
+            "codex",
+            "dsh"
+          ],
+          "recipe": "recipes/repomix.md",
+          "limitations": [
+            "CLI 打包不调用 LLM，模型阅读仍消耗宿主额度。",
+            "不是编译器语义分析；不得据材料包推断固件或板上正确性。",
+            "历史 issue #1878 报告旧中文编码文件遗漏，1.18.1 仍需实测。",
+            "CLI 可运行、产物完整、agent 发现和任务通过是不同结果。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-task-project-catalog.md",
+          "summary": "用 Repomix 打包明确选择的源码、配置与说明，保留文件路径和可追溯依据。"
+        }
+      ]
+    },
+    {
+      "capability_id": "code-navigation",
+      "title": "代码结构图与导览",
+      "description": "Understand-Anything 为不熟悉的项目生成结构图、导览和影响视图，需和直接读代码比较。",
+      "implementations": [
+        {
+          "implementation_id": "understand-anything",
+          "source_id": "understand-anything-upstream",
+          "targets": [
+            "codex"
+          ],
+          "recipe": "recipes/understand-anything.md",
+          "limitations": [
+            "DSH 原生接入尚未证明已发布；共享入口可见不等于流水线兼容。",
+            "官方安装器可能拉取当前上游，观察到的提交不是可恢复锁。",
+            "完整插件、Node/pnpm 构建和首次模型分析有成本，不能只复制 SKILL.md。",
+            "Codex 安装也写共享技能目录；单宿主试点需要完整账户隔离。",
+            "issue #739 的 worktree 源范围问题需用分支独有文件复核。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-understand-anything-assessment.md",
+          "summary": "Understand-Anything 为不熟悉的项目生成结构图、导览和影响视图，需和直接读代码比较。"
+        }
+      ]
+    },
+    {
+      "capability_id": "symbol-navigation",
+      "title": "跨文件定义与引用查询",
+      "description": "Serena 使用 clangd 等语言服务器辅助 C/C++ 符号查询，适合已有准确编译参数的工程。",
+      "implementations": [
+        {
+          "implementation_id": "serena",
+          "source_id": "serena-upstream",
+          "targets": [],
+          "recipe": "recipes/serena.md",
+          "limitations": [
+            "客户端 MCP 接入未在本机验证，targets 留空，不声明原生宿主兼容。",
+            "Keil 工程需先解决 compile_commands 与工具链参数映射。",
+            "Windows issue #2191 报告索引期间引用为空，不能当作没有调用者。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-task-project-catalog.md",
+          "summary": "Serena 使用 clangd 等语言服务器辅助 C/C++ 符号查询，适合已有准确编译参数的工程。"
+        }
+      ]
+    },
+    {
+      "capability_id": "code-impact",
+      "title": "图查询与变更影响",
+      "description": "GitNexus 提供调用图、路径与影响查询，当前保留为暂缓候选。",
+      "implementations": [
+        {
+          "implementation_id": "gitnexus",
+          "source_id": "gitnexus-upstream",
+          "targets": [],
+          "recipe": "recipes/gitnexus.md",
+          "limitations": [
+            "2026-11-04 调研记录为 PolyForm Noncommercial 1.0.0，工作用途条件待确认。",
+            "Windows 稳定版 issue #3818 报告函数节点不完整；主分支修复不等于发布包已修复。",
+            "C 函数指针关系有局限，本机与宿主接入均未验证。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-task-project-catalog.md",
+          "summary": "GitNexus 提供调用图、路径与影响查询，当前保留为暂缓候选。"
+        }
+      ]
+    },
+    {
+      "capability_id": "document-extraction",
+      "title": "扫描资料与复杂 PDF 读取",
+      "description": "Docling 提取正文、阅读顺序及表格结构，供报告流程保留来源并核对数字。",
+      "implementations": [
+        {
+          "implementation_id": "docling",
+          "source_id": "docling-upstream",
+          "targets": [],
+          "recipe": "recipes/docling.md",
+          "limitations": [
+            "需独立 Python 环境及模型资源；模型许可和下载单独检查。",
+            "issue #5171 报告单元格换行信息丢失，料号、单位和表格仍需人工对照。",
+            "输出文件可交给客户端阅读，不代表已经安装 DSH 插件。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-task-project-catalog.md",
+          "summary": "Docling 提取正文、阅读顺序及表格结构，供报告流程保留来源并核对数字。"
+        }
+      ]
+    },
+    {
+      "capability_id": "presentation-authoring",
+      "title": "公司汇报的模板化制稿",
+      "description": "Presenton 提供模板重建、生成、可视化编辑和导出，适合反复制稿的比较试点。",
+      "implementations": [
+        {
+          "implementation_id": "presenton",
+          "source_id": "presenton-upstream",
+          "targets": [],
+          "recipe": "recipes/presenton.md",
+          "limitations": [
+            "有内容 PPTX 的模板重建不保证母版无损；字体和可编辑性需实测。",
+            "Windows Store 0.9.11-beta 的导出问题报告不能直接推断采样版已解决。",
+            "模型和图片服务需单独配置；聊天订阅不等于 API 额度。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-task-project-catalog.md",
+          "summary": "Presenton 提供模板重建、生成、可视化编辑和导出，适合反复制稿的比较试点。"
+        }
+      ]
+    },
+    {
+      "capability_id": "website-template",
+      "title": "展示页与博客模板",
+      "description": "AstroWind 提供页面区块、导航、博客和 SEO 基础，由网站项目自己的 Git 和包管理器维护。",
+      "implementations": [
+        {
+          "implementation_id": "astrowind",
+          "source_id": "astrowind-upstream",
+          "targets": [],
+          "recipe": "recipes/astrowind.md",
+          "limitations": [
+            "调研时仓库已迁移到 arthelokyo/astrowind，v1 进入维护模式。",
+            "需要账号、交易或业务数据库时重新选型。",
+            "本地构建、移动端导航和样式尚未验证；不声明原生 agent 集成。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-task-project-catalog.md",
+          "summary": "AstroWind 提供页面区块、导航、博客和 SEO 基础，由网站项目自己的 Git 和包管理器维护。"
+        }
+      ]
+    },
+    {
+      "capability_id": "browser-site-builder",
+      "title": "浏览器内 AI 搭站",
+      "description": "bolt.diy 提供聊天生成、预览和编辑工作台，用户确实需要该界面时才试点。",
+      "implementations": [
+        {
+          "implementation_id": "bolt-diy",
+          "source_id": "bolt-diy-upstream",
+          "targets": [],
+          "recipe": "recipes/bolt-diy.md",
+          "limitations": [
+            "Node/pnpm 与浏览器能力之外，还需模型 API 或本地端点。",
+            "MIT 项目之外 WebContainers 有独立条款。",
+            "issues #2293/#2302 涉及 Docker 启动与发布产物，需按固定选定版本核查。",
+            "不假定复用聊天订阅，也不替代 Codex/DSH 宿主本身。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-task-project-catalog.md",
+          "summary": "bolt.diy 提供聊天生成、预览和编辑工作台，用户确实需要该界面时才试点。"
+        }
+      ]
+    },
+    {
+      "capability_id": "web-research",
+      "title": "反复采集同类网页资料",
+      "description": "按资料规模选择本地抽取或托管 API，保留 URL、时间和字段出处，偶发查询优先现有工具。",
+      "implementations": [
+        {
+          "implementation_id": "crawl4ai",
+          "source_id": "crawl4ai-upstream",
+          "targets": [],
+          "recipe": "recipes/crawl4ai.md",
+          "limitations": [
+            "Python/Playwright 与浏览器依赖需独立核查；LLM 抽取是可选路径。",
+            "issue #2450 报告特定深度抓取配置被拒绝；不承诺所有站点可采集。",
+            "调研许可含额外署名条款；不是完整 BOM 管理器。"
+          ]
+        },
+        {
+          "implementation_id": "firecrawl",
+          "source_id": "firecrawl-upstream",
+          "targets": [],
+          "recipe": "recipes/firecrawl.md",
+          "limitations": [
+            "托管 API 需要密钥和额度；自托管多服务不等于云端全部能力。",
+            "issue #4653 报告长网页抽取截断，必须核对字段与源页面。",
+            "主体 AGPL-3.0、部分组件 MIT 为调研快照；不是客户端已验证集成。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-task-project-catalog.md",
+          "summary": "按资料规模选择本地抽取或托管 API，保留 URL、时间和字段出处，偶发查询优先现有工具。"
+        }
+      ]
+    },
+    {
+      "capability_id": "service-deployment",
+      "title": "多服务与 VPS 运维",
+      "description": "明确有长期服务器需求后，在 Coolify 与 Dokploy 中选择适合负载的一种。",
+      "implementations": [
+        {
+          "implementation_id": "coolify",
+          "source_id": "coolify-upstream",
+          "targets": [],
+          "recipe": "recipes/coolify.md",
+          "limitations": [
+            "Linux/Docker/服务器管理权限是前提，Windows 只是管理端。",
+            "需要 SSH、域名、TLS、备份和恢复方案；本轮不连接 VPS。",
+            "issue #12461 报告部署密钥权限问题，面板不消除 Git/SSH 运维。"
+          ]
+        },
+        {
+          "implementation_id": "dokploy",
+          "source_id": "dokploy-upstream",
+          "targets": [],
+          "recipe": "recipes/dokploy.md",
+          "limitations": [
+            "Linux、Docker/Swarm 与服务器资源是前提，Windows 只是管理端。",
+            "issue #5863 报告多容器监控统计范围问题，应逐容器验证。",
+            "普通部分 Apache-2.0，proprietary 部分如存在适用独立许可；与 Coolify 二选一试点。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-04",
+          "document": "docs/research/2026-11-04-task-project-catalog.md",
+          "summary": "明确有长期服务器需求后，在 Coolify 与 Dokploy 中选择适合负载的一种。"
+        }
+      ]
+    }
+  ]
+}

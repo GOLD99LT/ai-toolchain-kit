@@ -1,0 +1,10 @@
+.local/
+.superpowers/
+.worktrees/
+node_modules/
+*.log
+.env
+.env.*
+!.env.example
+Thumbs.db
+Desktop.ini

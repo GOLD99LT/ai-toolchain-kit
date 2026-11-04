@@ -1,0 +1,6 @@
+{
+  "name": "ai-toolchain-runtime-repomix",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": { "repomix": "1.18.1" }
+}

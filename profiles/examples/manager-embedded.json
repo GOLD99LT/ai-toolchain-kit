@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "profile_id": "manager-embedded",
+  "capabilities": [
+    {
+      "capability_id": "skill-management",
+      "implementation_id": "skills-cli",
+      "source_id": "skills-cli-1.7.6",
+      "required_targets": [
+        "codex",
+        "dsh"
+      ],
+      "required": true,
+      "verification_id": "skill-management-smoke-v1"
+    },
+    {
+      "capability_id": "code-context",
+      "implementation_id": "repomix",
+      "source_id": "repomix-1.18.1",
+      "required_targets": [
+        "codex",
+        "dsh"
+      ],
+      "required": true,
+      "verification_id": "code-context-pilot-v1"
+    },
+    {
+      "capability_id": "provider-mcp-management",
+      "implementation_id": "cc-switch",
+      "source_id": "cc-switch-4.0.25",
+      "required_targets": [
+        "codex",
+        "dsh"
+      ],
+      "required": true,
+      "verification_id": "provider-mcp-smoke-v1"
+    },
+    {
+      "capability_id": "requirements-interview",
+      "implementation_id": "local-grilling",
+      "source_id": "private-grilling",
+      "required_targets": [
+        "codex",
+        "dsh"
+      ],
+      "required": true,
+      "verification_id": "interview-smoke-v1"
+    },
+    {
+      "capability_id": "office-production",
+      "implementation_id": "host-office",
+      "source_id": "host-office",
+      "required_targets": [
+        "codex"
+      ],
+      "required": true,
+      "verification_id": "office-artifacts-v1"
+    },
+    {
+      "capability_id": "code-navigation",
+      "implementation_id": "understand-anything",
+      "source_id": "understand-anything-upstream",
+      "required_targets": [
+        "codex"
+      ],
+      "required": false,
+      "verification_id": "embedded-navigation-v1"
+    }
+  ]
+}
