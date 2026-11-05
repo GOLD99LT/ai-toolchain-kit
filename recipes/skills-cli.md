@@ -1,19 +1,56 @@
-# Skills CLI 1.7.6
+# Skills CLI 1.7.6：可选的技能检查辅助
 
-source_id：`skills-cli-1.7.6`；owner：`npm-project-runtime`。CLI 位于 `runtime/skills-cli`；安装后的普通独立技能由 Skills CLI 管理，CC Switch 不同步同名项。宿主插件与 Understand-Anything 不归它管理。
+在需要命令行查看或研究技能来源时提供辅助；普通技能的日常管理优先使用 CC Switch。
 
-依赖：Node.js >=22.20.0、npm；获取 Git 来源时需要 Git。Windows 路线应核对长路径、junction/复制行为；可选复制模式不意味着可把机器绝对路径提交。依据：[既有源码研究](../docs/research/2026-11-04-tooling-comparison-v2.md)，[固定包元数据](https://registry.npmjs.org/skills/1.7.6)。
+**状态（2026-11-05）**：项目内已安装 1.7.6，历史 CLI 检查通过；这不代表任何新技能已安装或双端已通过。 最终状态看 [本轮配置与验证记录](../docs/validation/2026-11-05-toolbox-rollout.md)。
 
-先计划，再显式执行固定 CLI 安装：
+## 何时用
+
+需要查看 CLI 帮助、核查由它管理的条目时使用。已经由 CC Switch 管理的同名技能不再用它更新；原生插件也不归它维护。
+
+## 入口与输入
+
+从本仓库根目录的 PowerShell 使用项目内入口；已安装环境要求 Node.js >=22.20.0。只查看帮助可运行：
 
 ```powershell
-powershell -NoProfile -File scripts/setup.ps1 -ProfilePath profiles/examples/code-context.json -Only skills-cli
-powershell -NoProfile -File scripts/setup.ps1 -ProfilePath profiles/examples/code-context.json -Only skills-cli -Apply
 node runtime/skills-cli/node_modules/skills/bin/cli.mjs --help
 ```
 
-版本和 integrity 以 sources.lock.json 中记录为准，主程序检查安装版本与锁元数据；这不等于对已安装包逐文件重新做内容哈希。本任务没有运行安装。具体技能尚未选定完整 commit、子路径、依赖和预期文件清单，因此此处不提供可误装 HEAD 的技能 add 命令。选定后依据固定版本的帮助生成明确命令，安装后校验 SKILL.md 以及 scripts/references/assets 等整个包，不能仅哈希本机副本声称与上游一致。
+先明确技能来源、要查看的范围及现有负责人。两个例子是交给助手的检查请求，不执行安装或全局迁移。
 
-该版本不存在 `--agent dsh`。Codex 目标写共享 `.agents/skills`，DSH 在 filesystem 插件启用、共享来源开启、DSH_AGENTS_HOME 未重定向且无同名覆盖时有发现路径。发现与调用分别在 Codex、DSH 验证。CLI help 成功不能将 `skill-management-smoke-v1` 的 agent 结果置为通过。
+## 两个可复制例子
 
-全局技能安装/恢复演练需要独立 Windows 用户或虚拟机等完整边界。只改变工作目录或 HOME 无效；当前环境不具备时保留未执行。更新应新增明确来源记录并检查差异，不就地改锁或退回浮动版本。
+以下是使用请求，示例本身不表示已经执行。尖括号内容请换成自己的实际输入；候选工具需先完成选用与配置。
+
+**例一：解释现有命令**
+
+```text
+请从本仓库根目录运行 node runtime/skills-cli/node_modules/skills/bin/cli.mjs --help，用中文说明哪些命令只查看、哪些会写入。只解释，不安装、更新或同步技能。
+```
+
+**例二：只读查看项目范围**
+
+```text
+请运行 node runtime/skills-cli/node_modules/skills/bin/cli.mjs list，说明 CLI 在当前项目识别到的条目；空结果也如实报告，不推断全局没有技能。不要改任何条目，也不要公开私人路径。
+```
+
+## 输出与判断
+
+终端帮助或 CLI 能识别的清单，助手可在对话中解释。它的列表不保证包含原生插件和其他管理器的全部内容。
+
+看帮助是否来自项目内 1.7.6；清单要区分项目与全局。找到技能后仍需在目标客户端调用一个短任务，才能确认可用。
+
+## 管理、更新与停用
+
+CLI 程序本身由项目的固定 npm 来源维护；更新要记录精确版本和 integrity，不能用浮动 latest。只有明确交给 Skills CLI 的技能才由它独占更新；接管到 CC Switch 前先备份与核对。日常不用时可停止调用；移除其管理的技能须先查当前版本帮助和范围，原生插件不随之删除。
+
+## 费用与数据
+
+查看本地帮助和清单不调用模型 API；交给助手解释消耗当前模型额度。获取远端技能会访问其来源；技能自己的外部服务和许可需分别核对。
+
+## 常见问题
+
+- **为什么没有 DSH 安装参数？** 1.7.6 没有 `--agent dsh`，不要猜造。共享目录可能被 DSH 发现，但依赖和实际调用仍要验证。
+- **入口文件找不到？** 先确认在仓库根目录且该运行时已安装；不要临时用 npx 拉取浮动版本补救。
+
+依据：[Skills CLI 版本与源码研究，2026-11-04](../docs/research/2026-11-04-tooling-comparison-v2.md)、[已安装记录](../docs/validation/2026-11-05-foundation-and-pilot.md)。研究快照仅支持当时的功能与限制，不能作为本机任务通过证明。

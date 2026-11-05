@@ -4,8 +4,21 @@
     {
       "capability_id": "skill-management",
       "title": "普通独立技能管理",
-      "description": "固定 Skills CLI，用单一负责人安装和维护独立技能；技能内容另行固定完整提交与校验。",
+      "description": "普通Skills以CC Switch为默认入口，Skills CLI为已有可选辅助。",
       "implementations": [
+        {
+          "implementation_id": "cc-switch-skills",
+          "source_id": "cc-switch-4.0.25",
+          "targets": [
+            "codex",
+            "dsh"
+          ],
+          "recipe": "recipes/cc-switch.md",
+          "limitations": [
+            "原生插件和完整项目不拆包重复安装",
+            "接管现有技能前检查归属与备份"
+          ]
+        },
         {
           "implementation_id": "skills-cli",
           "source_id": "skills-cli-1.7.6",
@@ -157,7 +170,7 @@
             "DSH 原生接入尚未证明已发布；共享入口可见不等于流水线兼容。",
             "官方安装器可能拉取当前上游，观察到的提交不是可恢复锁。",
             "完整插件、Node/pnpm 构建和首次模型分析有成本，不能只复制 SKILL.md。",
-            "Codex 安装也写共享技能目录；单宿主试点需要完整账户隔离。",
+            "普通产品接入采用其适用的备份或隔离方式；只有明确的全局恢复演练才需完整账户边界",
             "issue #739 的 worktree 源范围问题需用分支独有文件复核。"
           ]
         }
@@ -391,6 +404,56 @@
           "document": "docs/research/2026-11-04-task-project-catalog.md",
           "summary": "明确有长期服务器需求后，在 Coolify 与 Dokploy 中选择适合负载的一种。"
         }
+      ]
+    },
+    {
+      "capability_id": "browser-interaction",
+      "title": "按需网页操作与页面检查",
+      "description": "通过浏览器工具实际打开页面和检查内容；不是搜索引擎。",
+      "implementations": [
+        {
+          "implementation_id": "playwright-mcp",
+          "source_id": "playwright-mcp-0.0.84",
+          "targets": [
+            "codex",
+            "dsh"
+          ],
+          "recipe": "recipes/playwright-mcp.md",
+          "limitations": [
+            "本机Chrome依赖",
+            "默认独立临时无头浏览器，不复用日常登录",
+            "客户端对话实际调用需重新打开后确认"
+          ]
+        }
+      ],
+      "evidence": [
+        "https://github.com/microsoft/playwright-mcp",
+        "docs/validation/2026-11-05-toolbox-rollout.md"
+      ]
+    },
+    {
+      "capability_id": "library-documentation",
+      "title": "软件库版本文档查询",
+      "description": "检索软件库资料，辅助小网站和API开发。",
+      "implementations": [
+        {
+          "implementation_id": "context7-mcp",
+          "source_id": "context7-remote",
+          "targets": [
+            "codex",
+            "dsh"
+          ],
+          "recipe": "recipes/context7.md",
+          "limitations": [
+            "依赖外部服务和限额",
+            "不保证覆盖所有STM32/EDA资料",
+            "无密钥基础查询成功不代表所有功能或长期访问均可用"
+          ]
+        }
+      ],
+      "evidence": [
+        "https://github.com/upstash/context7",
+        "docs/validation/2026-11-05-toolbox-rollout.md"
       ]
     }
   ]

@@ -1,16 +1,18 @@
 # AI 工具链方案与调研索引
 
-当前阶段（2026-11-05）：用户已批准第三版，基础工程和首个 Repomix 合成试点已落地，CC Switch 已升级。实际结果与未完成项见 [验证记录](validation/2026-11-05-foundation-and-pilot.md)，使用入口见 [根 README](../README.md)。
+当前阶段（2026-11-05）：按已批准的个人工具箱方案完成文档入口、配置参考和主要工具接入，使用入口见 [根 README](../README.md)，实际状态见 [本轮记录](validation/2026-11-05-toolbox-rollout.md)。早期部署工程和试点结果保留在历史记录中。
+
+最新进展：用户已批准以现成工具选型、统一管理和使用教学为目标的 [个人工具箱方案](design/2026-11-05-personal-ai-toolbox-plan.md)。本轮配置结果见 [执行记录](validation/2026-11-05-toolbox-rollout.md)；日常操作从 [CC Switch 指南](guides/cc-switch.md)、[使用卡](../recipes/README.md)、[配置参考](../configs/README.md) 开始。业务工程分析与自研管理层扩展保持暂停。
 
 ## 当前阅读入口
 
-1. [第三版方案：从任务发现并复用成熟项目](design/2026-11-04-ai-toolchain-design-v3.md)
+1. [已批准的个人 AI 工具箱方案](design/2026-11-05-personal-ai-toolbox-plan.md)
 2. [12 个任务型项目的比较、来源与使用反馈](research/2026-11-04-task-project-catalog.md)
 3. [Understand-Anything 专项审核](research/2026-11-04-understand-anything-assessment.md)
-4. [第三版严格评审记录](reviews/2026-11-04-design-v3-review.md)
+4. [个人工具箱方案评审](reviews/2026-11-05-personal-ai-toolbox-plan-review.md)
 5. [已确认需求与工作画像](requirements/work-profile.md)
-6. [实施计划](plans/2026-11-05-foundation-and-first-pilot.md)
-7. [实现独立评审](reviews/2026-11-05-foundation-code-review.md)
+6. [本轮配置与教学计划](plans/2026-11-05-toolbox-management-rollout.md)
+7. [此前基础工程验证](validation/2026-11-05-foundation-and-pilot.md)
 
 ## 支撑研究
 

@@ -18,7 +18,9 @@
         "Node.js >=22.20.0",
         "npm",
         "Git（安装 Git 来源技能时）"
-      ]
+      ],
+      "role": "optional-helper",
+      "note": "已装辅助CLI，不作为普通Skills主管理入口，不与CC Switch同时管理同名内容。"
     },
     {
       "source_id": "repomix-1.18.1",
@@ -53,13 +55,20 @@
     {
       "source_id": "private-grilling",
       "kind": "private-local",
-      "owner": "user-private-skills",
+      "owner": "cc-switch-native-skills",
       "restore_mode": "manual-private-source",
       "status": "pending-capture",
       "root_key": "personal_skills",
       "relative_path": "grilling",
       "checksum_status": "pending-capture",
-      "recipe": "recipes/local-grilling.md"
+      "recipe": "recipes/local-grilling.md",
+      "management_status": "managed-in-cc-switch",
+      "enabled_targets_observed": [
+        "codex",
+        "dsh"
+      ],
+      "observed_on": "2026-11-05",
+      "note": "本机已由CC Switch管理并同步两端；private-local和pending-capture仍表示私有源的可迁移快照尚未采集。"
     },
     {
       "source_id": "host-office",
@@ -69,14 +78,15 @@
       "status": "managed",
       "official_url": "https://developers.openai.com/codex/skills/",
       "recipe": "recipes/host-office.md",
-      "acquisition_status": "pending-verification",
+      "acquisition_status": "native-reinstall-not-yet-verified",
       "observed_entries": [
         "documents",
         "pdf",
         "presentations",
         "spreadsheets"
       ],
-      "version_policy": "由宿主原生管理器提供；采集实际来源和版本后记录，不虚构插件 ID。"
+      "version_policy": "由宿主原生管理器提供；采集实际来源和版本后记录，不虚构插件 ID。",
+      "observed_plugin_version": "26.1030.10813"
     },
     {
       "source_id": "understand-anything-upstream",
@@ -220,6 +230,34 @@
       "license_snapshot": "普通部分 Apache-2.0；专有部分单独许可",
       "evidence_document": "docs/research/2026-11-04-task-project-catalog.md",
       "observed_version": "0.30.10"
+    },
+    {
+      "source_id": "playwright-mcp-0.0.84",
+      "kind": "npm",
+      "package": "@playwright/mcp",
+      "version": "0.0.84",
+      "integrity": "sha512-weqLrA7/D8MJzNV9/t3Hnjp100tS2sxFXKeb2gH6Nhktqmdfvx5qRA9AZ5Mhjnre1jY0wltsrRK5VZS5NBgcvw==",
+      "runtime_dir": "runtime/playwright-mcp",
+      "bin": "cli.js",
+      "owner": "npm-project-runtime",
+      "configuration_owner": "cc-switch-native",
+      "restore_mode": "npm-lock-and-cc-switch",
+      "status": "locked",
+      "recipe": "recipes/playwright-mcp.md",
+      "official_url": "https://github.com/microsoft/playwright-mcp",
+      "observed_on": "2026-11-05"
+    },
+    {
+      "source_id": "context7-remote",
+      "kind": "upstream-guided",
+      "owner": "cc-switch-native",
+      "restore_mode": "native-http-configuration",
+      "status": "managed",
+      "recipe": "recipes/context7.md",
+      "official_url": "https://github.com/upstash/context7",
+      "endpoint": "https://mcp.context7.com/mcp",
+      "observed_on": "2026-11-05",
+      "note": "无密钥初始化和公开软件库查询于本次通过，服务访问和额度并非永久保证。"
     }
   ]
 }

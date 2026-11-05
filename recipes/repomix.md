@@ -1,18 +1,58 @@
-# Repomix 1.18.1
+# Repomix 1.18.1：把选定源码打成阅读材料
 
-source_id：`repomix-1.18.1`；owner：`npm-project-runtime`；独立运行目录：`runtime/repomix`。不额外安装常驻 MCP，不占用技能名。
+把分散的代码文件合成一份保留路径的材料，便于交给模型阅读和讨论。
 
-依赖：Node.js >=22，仓库统一要求 >=22.20.0；npm。Windows 试点必须核对路径、选择规则及 GBK 等旧编码。依据：[项目调研](../docs/research/2026-11-04-task-project-catalog.md)、[v1.18.1](https://github.com/yamadashy/repomix/releases/tag/v1.18.1)、[编码遗漏报告 #1878](https://github.com/yamadashy/repomix/issues/1878)。
+**状态（2026-11-05）**：项目内已安装 1.18.1；历史合成样例材料保留检查通过，Codex/DSH 对话任务结果须另记。 最终状态看 [本轮配置与验证记录](../docs/validation/2026-11-05-toolbox-rollout.md)。
+
+## 何时用
+
+需要把一个模块交给另一个对话或比较多个文件时用。当前助手直接读文件已足够时可跳过；它不提供编译器语义，也不证明固件能运行。
+
+## 入口与输入
+
+在本仓库根目录的 PowerShell 调用项目内程序。现有环境要求 Node.js >=22，项目统一基线 >=22.20.0：
 
 ```powershell
-powershell -NoProfile -File scripts/setup.ps1 -ProfilePath profiles/examples/code-context.json -Only repomix
-powershell -NoProfile -File scripts/setup.ps1 -ProfilePath profiles/examples/code-context.json -Only repomix -Apply
-node runtime/repomix/node_modules/repomix/bin/repomix.cjs --version
 node runtime/repomix/node_modules/repomix/bin/repomix.cjs --help
 ```
 
-产物生成按 [合成样例](../examples/stm32-context/) 中的实际配置和说明进行，输出选在 `.local/`。先列出源文件预期集合，再核对真实包中的路径、内容、注释、条件编译及同名 static 的上下文。不得把验收答案混进代码输入后宣称模型推导正确。默认试点保留实现和注释，不因压缩而丢失关键依据。
+准备允许处理的小目录、希望回答的问题及输出位置。下面使用仓库自带合成样例；如换成自己的项目，应替换输入路径并确认包含范围。
 
-打包本身不调用 LLM；将包交给配置的模型后，内容会按该宿主/供应商设置处理并消耗额度。Codex/DSH 的 CLI 调用路线各自验证；没有插件可发现时明确记录“不适用（CLI 路线）”，不能伪造 agent-discovered=true。任务通过必须有相应客户端实际完成的问答与代码依据。
+## 两个可复制例子
 
-`code-context-pilot-v1` 记录实际输入范围、输出字节数、用时、漏文件与已知答案；合成样例通过不等于旧编码、真实固件或编译/硬件验证通过。失败先检查选择配置、编码和版本；更新另建固定来源与完整性记录。
+以下是使用请求，示例本身不表示已经执行。尖括号内容请换成自己的实际输入；候选工具需先完成选用与配置。
+
+**例一：打包合成源码**
+
+```text
+请在仓库根目录创建 .local/repomix-demo/（如不存在），然后运行：
+node runtime/repomix/node_modules/repomix/bin/repomix.cjs examples/stm32-context --include "**/*.c,**/*.h" --output .local/repomix-demo/code.xml
+请报告实际纳入的源文件及有无遗漏，保留注释和函数体。这只生成演示材料，不编译或操作硬件。
+```
+
+**例二：用材料回答一个问题**
+
+```text
+请读取上一步生成的 .local/repomix-demo/code.xml，说明样例里 IRQ 如何到达回调，并给出文件名和符号。区分明确调用与受宏影响的路径；缺少配置时写无法确定，不凭函数名猜测，不读取样例答案文件。
+```
+
+## 输出与判断
+
+例一生成 `.local/repomix-demo/code.xml`，例二在对话中返回带代码依据的解释。默认 XML 风格输出不保证是已转义的严格 XML，不直接当通用 XML 数据解析。
+
+检查源文件清单、中文注释和函数体是否保留，再抽查一个回答是否能回到源码。打包成功、模型理解、真实编译与硬件验证是不同结果；本轮示例没有执行后两项。
+
+## 管理、更新与停用
+
+由项目内 npm 运行时负责，更新前记录精确版本与 integrity，更新后重打同一小样例。无需全局 MCP 常驻或技能同步；停用即不再调用。输出材料可自行清理，卸载运行时前检查是否还有其他项目引用。
+
+## 费用与数据
+
+本地打包不调用 LLM；把包交给助手后，源码会进入当前宿主/模型处理范围并消耗额度。默认保留安全检查，也仍应人工确认选定内容；输出留在私有目录。
+
+## 常见问题
+
+- **文件或中文注释缺失？** 先查 include/ignore 和文件编码；历史有 GBK/Shift-JIS 漏读报告，UTF-8 样例不能证明旧编码都可用。
+- **包太大？** 先缩小目录和文件选择；不要为了变小先删除理解代码所需的注释和实现。
+
+依据：[任务项目研究，2026-11-04](../docs/research/2026-11-04-task-project-catalog.md)、[历史试点结果](../docs/validation/2026-11-05-foundation-and-pilot.md)。研究快照仅支持当时的功能与限制，不能作为本机任务通过证明。

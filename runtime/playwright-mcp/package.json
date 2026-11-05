@@ -1,0 +1,8 @@
+{
+  "name": "ai-toolbox-playwright-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@playwright/mcp": "0.0.84"
+  }
+}

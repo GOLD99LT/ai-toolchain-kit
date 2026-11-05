@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "node",
+      "args": [
+        "<绝对仓库路径>/runtime/playwright-mcp/node_modules/@playwright/mcp/cli.js",
+        "--browser",
+        "chrome",
+        "--isolated",
+        "--headless"
+      ]
+    }
+  }
+}

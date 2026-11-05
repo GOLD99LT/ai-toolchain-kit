@@ -1,97 +1,66 @@
-# 按工作任务选择与恢复 AI 工具链
+# 我的 AI 工具箱
 
-从任务出发，复用已有 CLI、应用、模板和服务；记录来源、安装归属与验收结果。首版面向 Windows + Codex + DeepSeek Harness（DSH）。当前目录包括 12 个任务型项目，以及 Skills CLI、CC Switch、本地 grilling、宿主办公 4 个基线实现。
+根据工作需求选择成熟工具，装好、配好、讲清楚怎么用。日常配置优先使用 **CC Switch**，原生插件和独立软件保留自己的入口。这个仓库提供选型依据、中文使用卡、配置参考和换机说明。
 
-**当前状态（2026-11-05）：首个可运行版本已落地。** 环境检查、计划、显式安装和验证入口已在 Windows PowerShell 5.1 与 PowerShell 7 检查；本机已安装项目内的 skills@1.7.6、repomix@1.18.1，合成代码试点保留了 14/14 文件和 28/28 源码核查内容。CC Switch 已通过官方 MSI 升级到 4.0.25，并核查版本和数据库完整性。详情与限制见 [验证记录](docs/validation/2026-11-05-foundation-and-pilot.md)。
+## 现在从哪里开始
 
-双端 agent 任务、真实公司资料、Understand-Anything 和完整隔离换机演练仍未验证。固定来源、安装成功、CLI 可运行、agent 发现与任务通过分别记录。
+| 你要做什么 | 打开哪里 |
+| --- | --- |
+| 查看与开关模型配置、MCP、普通 Skills | **CC Switch** → 对应页面；[管理指南](docs/guides/cc-switch.md) |
+| 让 AI 先帮你问清楚需求 | Codex / DeepSeek Harness；[grilling 使用卡](recipes/local-grilling.md) |
+| 复杂开发、调试、代码评审 | Codex 的现有 Superpowers；[使用卡](recipes/superpowers.md) |
+| 读取网页、操作页面、检查小网站 | 对话中请求使用 Playwright；[浏览器使用卡](recipes/playwright-mcp.md) |
+| 查软件库/API 的文档 | 对话中请求使用 Context7；[文档查询使用卡](recipes/context7.md) |
+| 测试汇总、PDF、PPT、BOM | Codex 现有办公能力；[办公使用卡](recipes/host-office.md) |
+| 需要代码图谱、PPT 制稿应用等专业工具 | [按任务选工具](catalog/README.md)，了解后按需选择 |
 
-## 入口 A：恢复自己的选择
+## 本机已完成的配置（2026-11-05）
 
-首次获取工程：
+- **CC Switch 4.0.25** 已作为日常主入口，原供应商、路由和全局提示词保留。
+- **Playwright MCP 0.0.84** 已安装，通过 CC Switch 同时登记到 Codex 和 DSH；独立 MCP 短演示已打开公开网页并截图。
+- **Context7** 官方远程 MCP 已通过 CC Switch 同步到两端；本次无密钥连接、公开软件库查询和路由文档读取成功。访问条件及限额由服务方决定。
+- **grill-me / grilling** 已由 CC Switch 同步到两端；本机 DSH 文件与管理器源一致。
+- **Superpowers、Codex 办公插件** 保持原生管理；PLC 技能保持原来 Codex 启用状态。
+- 原有 **Repomix / Skills CLI** 保留，前者按需整理代码材料，后者只作辅助，不与 CC Switch 重复管理技能。
+
+这是一台电脑的执行记录，克隆仓库不会自动得到相同配置。MCP 直接调用、配置同步和客户端对话内调用分别记录。详细证据和未完成项见 [本轮状态](docs/validation/2026-11-05-toolbox-rollout.md)。
+
+## 先试这两个例子
+
+重新打开 Codex / DSH 或新建能重新加载工具的对话，然后复制：
+
+> 使用 Playwright 打开 https://example.com，告诉我页面标题和主要内容，并截图。不要登录任何账号，也不要修改网页或本地代码。
+
+> 使用 Context7 查 Express 的基础路由示例，说明资料来源；只给一个最小例子，不创建项目。
+
+成功应能看到对应工具调用和可核对的结果。若工具没有出现，先按 [排错指南](docs/guides/troubleshooting.md) 核对启用与客户端刷新，不要仅凭 AI 的口头回答认定工具已运行。
+
+## 两个复用入口
+
+**第一次选择自己的工具**：把 [需求访谈入口](prompts/onboarding.md) 交给你的 AI，说明工作、系统和预算。AI 解释推荐和限制，你选择后用现成方式安装，并获得相应使用卡。当前目录没有覆盖的任务应继续研究，不必照搬作者全部组合。
+
+**本人换电脑**：按 [换机指南](docs/guides/migration.md) 携带个人私有备份和工具清单，使用 CC Switch/各产品官方方式恢复，再正常登录。公开仓库没有密钥、公司模板和会话记录。
 
 ```powershell
 git clone https://github.com/GOLD99LT/ai-toolchain-kit.git
 cd ai-toolchain-kit
 ```
 
-在仓库根目录打开 PowerShell；需要 Node.js >=22.20.0、npm，Git 来源技能还需要 Git。先阅读输出，处理实际报告的缺失条件。
+阅读和使用手册不要求运行 npm、JSON profile 或测试。安装个别 CLI/MCP 时，按对应使用卡准备它自己的依赖。
 
-```powershell
-powershell -NoProfile -File scripts/doctor.ps1
-powershell -NoProfile -File scripts/setup.ps1 -ProfilePath profiles/examples/code-context.json
-```
+## 文件在哪里
 
-setup 默认只生成计划。明确执行时增加 `-Apply`：
+- [recipes/](recipes/README.md)：每项工具的用途、入口、例子、费用、更新和停用。
+- [configs/](configs/README.md)：无密钥的管理器导入示例与个人清单模板。
+- [catalog/](catalog/README.md)：按工作问题组织的推荐和取舍。
+- [playbooks/](playbooks/)：管理汇报、嵌入式、网站研究的组合用法。
+- [docs/](docs/README.md)：指南、调研来源、设计演变和实际状态。
+- `.local/`：本机私有配置、备份和输出，已忽略，不上传。
 
-```powershell
-powershell -NoProfile -File scripts/setup.ps1 -ProfilePath profiles/examples/code-context.json -Apply
-powershell -NoProfile -File scripts/verify.ps1 -ProfilePath profiles/examples/code-context.json
-```
+## 已有技术辅助
 
-只选择 Repomix 时：
+旧 scripts、runtime、tests 和 profiles 保留，使用说明集中在 [技术辅助说明](docs/guides/legacy-automation.md)。它们不是普通 Skills 的主管理入口，不是新用户开始使用工具箱的前置步骤。
 
-```powershell
-powershell -NoProfile -File scripts/setup.ps1 -ProfilePath profiles/examples/code-context.json -Only repomix
-powershell -NoProfile -File scripts/setup.ps1 -ProfilePath profiles/examples/code-context.json -Only repomix -Apply
-```
+项目以 [个人工具箱方案](docs/design/2026-11-05-personal-ai-toolbox-plan.md) 为当前方向。Understand-Anything 等完整项目仍是按需候选；不会因配置工具箱自动分析业务工程、修改固件/PCB 或部署 VPS。
 
-`-Only` 统一按 `implementation_id` 选择：`repomix` 或 `skills-cli`，不按 npm 包名 `skills`。筛选不会修改 profile；验证整个 profile 时，未选项仍可能未安装。
-
-如果只核对工具安装和 CLI 版本，可明确使用：
-
-```powershell
-powershell -NoProfile -File scripts/verify.ps1 -ProfilePath profiles/examples/code-context.json -ToolsOnly
-```
-
-| 验证入口 | 条件与实际含义 | 退出码 |
-| --- | --- | --- |
-| 默认验证整个 profile | 工具检查通过，但尚未实测 agent 任务：`partial` | 2 |
-| `-ToolsOnly` | 选中 npm 工具的安装/锁元数据和 CLI 版本通过，且无必需人工项：`tools-verified` | 0 |
-| 工具检查失败或缺失 | `failed`，需按报告原因处理 | 1 |
-
-`-ToolsOnly` 不验证 agent 任务，也不证明每个已安装文件均与原包逐字节相符。较宽 profile 仍有必需人工步骤时，即使用此参数也可能返回 `partial`/2。当前脚本不会因 CLI 成功将 `agent_tasks_verified` 置为 true；完整任务结果由主任务另行记录。不要为了让退出码为 0 而降低 `required_targets`。
-
-最小 profile 只含 skills@1.7.6 和 repomix@1.18.1。它不安装整套技能或所有候选。Skills CLI 锁定与具体技能提交/文件清单是两层记录。普通技能、宿主插件、完整应用分别由原负责人维护。CC Switch 走原生 MSI/UI；私有 grilling 缺失及办公插件恢复来源未核实时明确保留人工步骤。
-
-个人 profile、私有根映射、下载、备份、凭据和输出留在已忽略的 `.local/`；运行依赖由各自 runtime 目录管理，不提交 node_modules。不要重写 HOME/CODEX_HOME 模拟换机。完整恢复演练需要独立 Windows 用户、虚拟机或可用 Sandbox；当前真实用户中的安装不是隔离演练。
-
-## 入口 B：第一次选自己的工具
-
-把 [onboarding.md](prompts/onboarding.md) 交给正在使用的助手，说明工作、输入输出和约束。入口不要求先安装新 Skill。它会读取已有证据、补充目录外需求的研究，生成与恢复入口相同格式的个人 profile。
-
-不要直接照搬作者的 STM32/PPT 组合。[manager-embedded.json](profiles/examples/manager-embedded.json) 仅供了解较宽选择的结构，含未完成的人工来源；[code-context.json](profiles/examples/code-context.json) 是独立的最小试点。访谈结果应说明必需与可选项、宿主要求、费用与验证任务。
-
-## 按任务查阅
-
-| 工作 | 候选或流程 |
-| --- | --- |
-| 接手 STM32/已有代码 | [嵌入式流程](playbooks/embedded-code-context.md)：Repomix、Understand-Anything、Serena；GitNexus 暂缓 |
-| 资料、中文 PDF、公司 PPT、BOM | [办公流程](playbooks/reports-and-office.md)：宿主能力优先，按缺口比较 Docling、Presenton |
-| 重复网页研究与小网站 | [资料与网站流程](playbooks/research-and-small-sites.md)：Crawl4AI/Firecrawl、AstroWind/bolt.diy、按需 Coolify/Dokploy |
-| 全部来源与接入步骤 | [能力目录说明](catalog/README.md)、[来源记录](catalog/sources.lock.json)、[recipes](recipes/README.md) |
-
-## 验收与维护
-
-运行完整的合成代码材料试点：
-
-```powershell
-powershell -NoProfile -File scripts/pilot-repomix.ps1
-```
-
-该入口使用项目内已锁定的 Repomix，不要求全局 `repomix` 命令。输出位于 `.local/pilots/`，最近一次结构化报告为 `.local/reports/repomix-pilot-latest.json`。检查按各自的源码文件块进行，答案文件不能补齐缺失源码；通过表示材料完整，不表示模型理解、固件运行或硬件验证通过。
-
-开发检查：
-
-```powershell
-npm test
-npm run check
-```
-
-`verify.ps1` 能检查的范围以它的真实输出为准；运行 CLI help/version 不能证明 agent 发现或业务任务通过。每项报告应包含 verification_id、输入、源码/包版本、客户端、实际结果、证据、人工步骤、错误及时间/费用。Codex、DSH 分别验证；`required_targets` 保持用户原要求。
-
-先核对计划与 JSON 引用，再做 [合成代码样例](examples/stm32-context/) 的已知答案比较；真实公司模板、真实 BOM、固件编译和板上验证另行记录。完整隔离不可用、账户未登录、私有来源未提供时，明确记录未执行。
-
-研究来源和决策依据见 [批准设计](docs/design/2026-11-04-ai-toolchain-design-v3.md)、[执行计划](docs/plans/2026-11-05-foundation-and-first-pilot.md)、[任务项目调研](docs/research/2026-11-04-task-project-catalog.md)。本目录沿用 2026-11-04 的证据与用户指定固定值，不宣称版本是当前最新，也不重新抓取 Stars。
-
-本仓库原创代码与文档采用 [MIT](LICENSE)。第三方项目、模型、模板、宿主插件保留各自许可；本仓库的 MIT 不重新许可它们。
+原创文档与代码采用 [MIT](LICENSE)。第三方工具、模型和模板保留各自许可，具体来源见使用卡与研究记录。
