@@ -258,6 +258,38 @@
       "endpoint": "https://mcp.context7.com/mcp",
       "observed_on": "2026-11-05",
       "note": "无密钥初始化和公开软件库查询于本次通过，服务访问和额度并非永久保证。"
+    },
+    {
+      "source_id": "codex-superpowers-native",
+      "kind": "host-managed",
+      "owner": "codex-native-plugin-manager",
+      "restore_mode": "native-plugin",
+      "status": "managed",
+      "official_url": "https://github.com/obra/superpowers",
+      "recipe": "recipes/superpowers.md",
+      "observed_on": "2026-11-07",
+      "observed_version": "6.3.0",
+      "note": "本机Codex原生分发版本；不拆分复制到其他宿主，不代表DSH使用相同版本。"
+    },
+    {
+      "source_id": "dsh-superpowers-65c8ee8",
+      "kind": "upstream-guided",
+      "owner": "dsh-native-plugin-manager",
+      "restore_mode": "exact-git-commit-native-bundle",
+      "status": "locked",
+      "package": "dsh-superpowers",
+      "package_version": "0.1.0",
+      "repository": "https://github.com/codeAnqiang-ma/dsh-superpowers.git",
+      "commit": "65c8ee8a5f87b0b16b44ceeca8bc10a48cec2ec9",
+      "upstream_version": "7.0.2",
+      "upstream_commit": "df2e996a174f49f05aa5d5777ca56fbb0aa972ec",
+      "official_url": "https://github.com/codeAnqiang-ma/dsh-superpowers/tree/65c8ee8a5f87b0b16b44ceeca8bc10a48cec2ec9",
+      "recipe": "recipes/superpowers.md",
+      "observed_on": "2026-11-07",
+      "license_snapshot": "MIT adapter + MIT Superpowers notices",
+      "evidence_document": "docs/research/2026-11-07-superpowers-dsh-community.md",
+      "validation_document": "docs/validation/2026-11-07-superpowers-dsh.md",
+      "note": "本机原生管理器已将manifest与pnpm lock固定至此Git提交；不是npm同名0.1.0产物，不自动升级HEAD/latest。"
     }
   ]
 }

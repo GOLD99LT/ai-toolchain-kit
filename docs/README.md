@@ -6,6 +6,8 @@
 
 ## 当前阅读入口
 
+0. [DSH Superpowers：使用卡](../recipes/superpowers.md)、[社区评审](research/2026-11-07-superpowers-dsh-community.md)、[方案](design/2026-11-07-superpowers-dsh.md)、[验收](validation/2026-11-07-superpowers-dsh.md)（2026-11-07）
+
 1. [已批准的个人 AI 工具箱方案](design/2026-11-05-personal-ai-toolbox-plan.md)
 2. [12 个任务型项目的比较、来源与使用反馈](research/2026-11-04-task-project-catalog.md)
 3. [Understand-Anything 专项审核](research/2026-11-04-understand-anything-assessment.md)

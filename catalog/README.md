@@ -8,7 +8,7 @@
 | --- | --- | --- | --- |
 | 管普通 Skills、MCP、提示词 | 日常优先 CC Switch，分客户端开关 | 4.0.25 已安装；两 MCP 已登记；调用按端核验 | [CC Switch](../recipes/cc-switch.md) |
 | 把模糊想法问清楚 | 沿用本地修改的 grilling / grill-me | 已纳管，DSH enabled、源 hash 匹配；agent 待确认 | [grilling](../recipes/local-grilling.md) |
-| 复杂需求、调试与评审 | 使用现有 Superpowers，按任务规模选方法 | Codex 原生插件已有；DSH 未确认 | [Superpowers](../recipes/superpowers.md) |
+| 复杂需求、调试与评审 | 各宿主原生 Superpowers，按任务规模选方法 | Codex 插件已有；DSH 于 11-07 安装社区固定提交；[验收](../docs/validation/2026-11-07-superpowers-dsh.md) | [Superpowers](../recipes/superpowers.md) |
 | 报告、中文 PDF、PPT、BOM | 先用现有办公能力 | Codex 原生入口已有；任务与恢复结果另记 | [原生办公](../recipes/host-office.md) |
 | 动态网页阅读、页面检查 | Playwright MCP | 项目内 0.0.84 已装；双端 enabled；direct server 成功、agent 待确认 | [Playwright](../recipes/playwright-mcp.md) |
 | 软件库版本文档 | Context7 remote | 无密钥直接检索成功；双端 enabled；agent 待确认；npm 4.5.0 仅核查 | [Context7](../recipes/context7.md) |

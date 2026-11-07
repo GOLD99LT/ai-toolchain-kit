@@ -8,13 +8,17 @@
 | --- | --- |
 | 查看与开关模型配置、MCP、普通 Skills | **CC Switch** → 对应页面；[管理指南](docs/guides/cc-switch.md) |
 | 让 AI 先帮你问清楚需求 | Codex / DeepSeek Harness；[grilling 使用卡](recipes/local-grilling.md) |
-| 复杂开发、调试、代码评审 | Codex 的现有 Superpowers；[使用卡](recipes/superpowers.md) |
+| 复杂开发、调试、代码评审 | Codex / DSH 各自原生 Superpowers；[使用卡](recipes/superpowers.md) |
 | 读取网页、操作页面、检查小网站 | 对话中请求使用 Playwright；[浏览器使用卡](recipes/playwright-mcp.md) |
 | 查软件库/API 的文档 | 对话中请求使用 Context7；[文档查询使用卡](recipes/context7.md) |
 | 测试汇总、PDF、PPT、BOM | Codex 现有办公能力；[办公使用卡](recipes/host-office.md) |
 | 需要代码图谱、PPT 制稿应用等专业工具 | [按任务选工具](catalog/README.md)，了解后按需选择 |
 
-## 本机已完成的配置（2026-11-05）
+## 最新接入（2026-11-07）
+
+**Superpowers 已接入 DSH**：复用社区原生适配的固定 Git 提交，包含 15 个技能与自动引导，覆盖本机终端和桌面快捷方式实际使用的两个 `web` profile。重启 DSH、新建会话后即可按 [中文使用卡](recipes/superpowers.md) 使用；[社区方案比较](docs/research/2026-11-07-superpowers-dsh-community.md)、[验收和限制](docs/validation/2026-11-07-superpowers-dsh.md) 一并保留。第三方源码、私人配置与原始日志不进入本仓库。
+
+## 历史配置记录（2026-11-05）
 
 - **CC Switch 4.0.25** 已作为日常主入口，原供应商、路由和全局提示词保留。
 - **Playwright MCP 0.0.84** 已安装，通过 CC Switch 同时登记到 Codex 和 DSH；独立 MCP 短演示已打开公开网页并截图。

@@ -455,6 +455,44 @@
         "https://github.com/upstash/context7",
         "docs/validation/2026-11-05-toolbox-rollout.md"
       ]
+    },
+    {
+      "capability_id": "software-development-workflow",
+      "title": "复杂开发、调试与代码评审",
+      "description": "各宿主使用原生Superpowers集成，提供需求澄清、计划、TDD、调试与评审方法。",
+      "implementations": [
+        {
+          "implementation_id": "superpowers-codex-native",
+          "source_id": "codex-superpowers-native",
+          "targets": [
+            "codex"
+          ],
+          "recipe": "recipes/superpowers.md",
+          "limitations": [
+            "由Codex原生插件管理；与DSH独立更新和验收。"
+          ]
+        },
+        {
+          "implementation_id": "superpowers-dsh-native",
+          "source_id": "dsh-superpowers-65c8ee8",
+          "targets": [
+            "dsh"
+          ],
+          "recipe": "recipes/superpowers.md",
+          "limitations": [
+            "社区适配，含自动bootstrap；部分子代理映射为旧版限制，当前工具schema优先。",
+            "本机15技能可注册，长时编排、视觉伴侣及真实压缩行为未全部验收。",
+            "应核查实际启动入口的profile；安装与模型任务通过分别记录。"
+          ]
+        }
+      ],
+      "evidence": [
+        {
+          "date": "2026-11-07",
+          "document": "docs/validation/2026-11-07-superpowers-dsh.md",
+          "summary": "固定社区Git提交，DSH原生管理；任务级证据与局限见验收记录。"
+        }
+      ]
     }
   ]
 }
